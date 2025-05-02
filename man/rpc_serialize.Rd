@@ -22,4 +22,5 @@ Serialize \R Objects so they can be passed to
 rpc_serialize(1L)
 rpc_serialize(1:2)
 rpc_serialize(LETTERS[1:2])
+
 }

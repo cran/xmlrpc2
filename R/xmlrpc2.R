@@ -1,12 +1,13 @@
 #' @import base64enc
 #' @import xml2
 #' @import curl
+NULL
 
-#  -----------------------------------------------------------
-#  xmlrpc 
-#  =======
-#' @title Call the Remote Procedure
+
+#' Call the Remote Procedure
+#' 
 #' @description Call a reomte procedure with the \code{XML-RPC} protocol.
+#' 
 #' @param url a character string giving the url to the server.
 #' @param method a character string giving the name of the method 
 #'               to be invoked.
@@ -27,14 +28,17 @@
 #'                    This object is the return value from \code{curl_fetch_memory}
 #'                    where just the class \code{c("fetch_error", error")}
 #'                    is added.
+#' 
 #' @return the reponse of \code{curl} or the response converted to 
 #'         \R objects.
+#' 
 #' @examples
 #' \dontrun{
 #' url <- "https://www.neos-server.org"
 #' xmlrpc(url, "listAllSolvers")
 #' xmlrpc(url, "listSolversInCategory", params = list(category = "socp"))
 #' }
+#' 
 #' @export
 xmlrpc <- function(url, method, params = list(), 
     handle = NULL, opts = list(), convert = TRUE, useragent = "xmlrpc",
@@ -92,19 +96,30 @@ request_error_msg <- function(x) {
         error = function(e) "The request was not successful!")
 }
 
-#  -----------------------------------------------------------
-#  to_xmlrpc 
-#  =========
-#' @title Create a \code{XML-RPC} Call
-#' @description abc
+
+#' Create a \code{XML-RPC} Call
+#' 
+#' @description Constructs the XML body for an XML-RPC request. This function 
+#'   takes the target method name and a list of R objects as parameters. 
+#'   Each parameter in the list is converted into its corresponding XML-RPC 
+#'   representation using the `rpc_serialize` method. The resulting XML 
+#'   structure follows the XML-RPC specification for a method call, 
+#'   encapsulating the method name and the serialized parameters. This 
+#'   function is typically used internally by the main `xmlrpc` function 
+#'   to prepare the request before sending it to the server, but it can 
+#'   also be used directly to inspect the XML that would be generated.
+#' 
 #' @param method a character string giving the name of the method 
 #'               to be invoked.
 #' @param params a list containing the parmeters which are added to 
 #'               the \code{XML} file sent via the remote procedure call.
+#' 
 #' @return an object of class \code{"xml_node"} containing a \code{XML-RPC} call.
+#' 
 #' @examples
 #' params <- list(1L, 1:3, rnorm(3), LETTERS[1:3], charToRaw("A"))
 #' cat(as.character(to_xmlrpc("some_method", params)))
+#' 
 #' @export
 to_xmlrpc <- function(method, params) {
     root <- read_xml("<methodCall></methodCall>")

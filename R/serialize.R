@@ -1,32 +1,47 @@
 
+
 rpc_typeof <- function(x) UseMethod("rpc_typeof", x)
+
 rpc_typeof.logical <- function(x) "boolean"
+
 rpc_typeof.integer <- function(x) "i4"
+
 rpc_typeof.double <- function(x) "double"
+
 rpc_typeof.character <- function(x) "string"
+
 rpc_typeof.raw <- function(x) "base64"
+
 rpc_typeof.POSIXt <- function(x) "dateTime.iso8601"
+
 rpc_typeof.POSIXct <- function(x) "dateTime.iso8601"
+
 rpc_typeof.Date <- function(x) "dateTime.iso8601"
 
+
 to_rpc <- function(x) UseMethod("to_rpc", x)
-to_rpc.default <- identity
+
+to_rpc.default <- function(x) x
+
 to_rpc.Date <- function(x) format(x, "%Y%m%dT%H:%H:%S")
+
 to_rpc.POSIXt <- function(x) format(as.POSIXct(x), "%Y%m%dT%H:%H:%S")
 
-#  -----------------------------------------------------------
-#  rpc_serialize 
-#  =============
+
 #' Convert \R Objects into the \code{XML-RPC} Format
+#' 
 #' @description Serialize \R Objects so they can be passed to 
 #'   \code{to_xmlrpc} as parameters.
+#' 
 #' @param x an \R object.
 #' @param ... additional optional arguments (currently ignored).
 #' @return an object of class \code{"xml_node"}.
+#' 
 #' @examples
 #' rpc_serialize(1L)
 #' rpc_serialize(1:2)
 #' rpc_serialize(LETTERS[1:2])
+#' 
 #' @export
 rpc_serialize <- function(x, ...) UseMethod("rpc_serialize", x)
 
@@ -140,12 +155,12 @@ list_to_array <- function(x) {
     value
 }
 
-#  -----------------------------------------------------------
-#  from_xmlrpc 
-#  ===========
+
 #' Convert from the \code{XML-RPC} Format into an \R Object.
+#' 
 #' @description Convert an object of class \code{"xml_code"} or
 #'   a character in the \code{XML-RPC} Format into an \R Object.
+#' 
 #' @param xml a character string containing \code{XML} in the 
 #'            remote procedure call protocol format.
 #' @param raise_error a logical controling the behavior if the
@@ -154,10 +169,12 @@ list_to_array <- function(x) {
 #'                    object inheriting from \code{"c("xmlrpc_error", "error")"}
 #'                    is returned.
 #' @return an R object derived from the input.
+#' 
 #' @examples
 #' params <- list(1L, 1:3, rnorm(3), LETTERS[1:3], charToRaw("A"))
 #' xml <- to_xmlrpc("some_method", params)
 #' from_xmlrpc(xml)
+#' 
 #' @export
 from_xmlrpc <- function(xml, raise_error = TRUE) {
     stopifnot( inherits(xml, c("xml_node", "character")) )

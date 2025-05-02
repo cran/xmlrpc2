@@ -17,9 +17,18 @@ the \code{XML} file sent via the remote procedure call.}
 an object of class \code{"xml_node"} containing a \code{XML-RPC} call.
 }
 \description{
-abc
+Constructs the XML body for an XML-RPC request. This function 
+  takes the target method name and a list of R objects as parameters. 
+  Each parameter in the list is converted into its corresponding XML-RPC 
+  representation using the `rpc_serialize` method. The resulting XML 
+  structure follows the XML-RPC specification for a method call, 
+  encapsulating the method name and the serialized parameters. This 
+  function is typically used internally by the main `xmlrpc` function 
+  to prepare the request before sending it to the server, but it can 
+  also be used directly to inspect the XML that would be generated.
 }
 \examples{
 params <- list(1L, 1:3, rnorm(3), LETTERS[1:3], charToRaw("A"))
 cat(as.character(to_xmlrpc("some_method", params)))
+
 }

@@ -4,8 +4,16 @@
 \alias{xmlrpc}
 \title{Call the Remote Procedure}
 \usage{
-xmlrpc(url, method, params = list(), handle = NULL, opts = list(),
-  convert = TRUE, useragent = "xmlrpc", raise_error = TRUE)
+xmlrpc(
+  url,
+  method,
+  params = list(),
+  handle = NULL,
+  opts = list(),
+  convert = TRUE,
+  useragent = "xmlrpc",
+  raise_error = TRUE
+)
 }
 \arguments{
 \item{url}{a character string giving the url to the server.}
@@ -49,4 +57,5 @@ url <- "https://www.neos-server.org"
 xmlrpc(url, "listAllSolvers")
 xmlrpc(url, "listSolversInCategory", params = list(category = "socp"))
 }
+
 }
